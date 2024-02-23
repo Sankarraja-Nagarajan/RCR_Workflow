@@ -1,0 +1,187 @@
+.approval
+{
+    mat-label{
+        font-size: 15px;
+        font-weight: bold;
+    }
+    #plant{
+        padding-left: 80px;
+    }
+
+    .Btn{
+        background-color: rgb(230, 168, 54)  !important;
+        color: white !important;
+        font-size: 15px;
+        font-weight: bold;
+    }
+    .box{
+        background-color:white;
+        height: 220px;
+        box-shadow: 0 2px 6px 0 rgba(31, 0, 158, 0.16);
+        border-radius: 10px; 
+
+        .subtitle-text
+        {
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+    }
+    .title{
+        font-size: 17px;
+        font-weight: bold;
+        color:orange;
+    }
+    .TitleBorder{
+        border-bottom: 5px solid #F3F6EE;
+    }
+    .selectbox
+    {
+        height: 50px !important;
+    }
+
+    .select{
+        width: 100% !important;
+        height: 100px;
+        padding: 10px;
+    }
+
+    .icon{
+        color :rgb(247, 163, 9);
+        }
+
+        .borders {
+            border-top-left-radius: 15px;
+            background:rgb(251, 138, 8);
+            width: 400px;
+            position: relative;
+            height: 30px;
+            color: white;
+            font-size: 18px;
+            font-family: arial, sans-serif;
+            font-weight: bold;
+        }
+        .borders:after {
+            position: absolute;
+            right: -50px;
+            content: '';
+            width: 0;
+            height: 0;
+            border-left: 50px solid transparent;
+            border-right: 50px solid transparent;
+            border-bottom: 50px solid rgb(251, 138, 8);
+        }
+        .borderstraight{
+            border-bottom: 4px solid rgb(251, 138, 8);
+        }
+        @media (max-width: 550px) {
+            .borders{
+                border-top-right-radius: 15px;
+            }
+            .borders:after{
+                border-bottom: 0px solid rgb(251, 138, 8) !important;
+            }
+           }
+
+.table-container
+{
+
+    overflow: auto;
+    min-height: 10px !important;
+    max-height: 400px !important;
+
+    table
+    {
+        width : 100%;
+        overflow: auto !important;
+        th{
+            color :white;
+            background-color: rgb(253, 179, 43);
+            min-width: 200px;
+        }
+        td{
+            font-size: 12px;
+            min-width: max-content !important;
+            background-color: white;
+        }
+    }
+
+}
+
+    ::ng-deep .mat-mdc-form-field-subscript-wrapper {
+        height: 5px;
+    }
+    ::ng-deep .mat-mdc-text-field-wrapper {
+        height: 40px !important;
+    }
+}
+
+
+.created
+{
+    color: sienna;
+    font-weight: bold;   
+}
+.recreated
+{
+    color: sienna;
+    font-weight: bold;  
+}
+.approved
+{
+    color: green;
+    font-weight: bold;
+}
+.active
+{
+    color: violet;
+    font-weight: bold;
+}
+.pending
+{
+    color: rgb(148, 148, 53);
+    font-weight: bold;
+}
+
+.rejected
+{
+    color: red;
+    font-weight: bold;
+}
+
+.edit
+{
+    color: gray;
+    cursor: pointer;
+}
+
+.back-btn
+{
+    background-color: rgb(241, 100, 100) !important;
+    color: white !important;
+}
+
+.attachment-btn
+{
+    background-color: rgb(106, 106, 202) !important;
+    color: white !important;
+}
+
+
+.approve-btn
+{
+    background-color: rgb(122, 219, 122) !important;
+    color: white !important;
+}
+
+.cancel-btn
+{
+    background-color: rgb(226, 111, 111) !important;
+    color: white !important;
+}
+
+.edit-btn
+{
+    background-color: rgb(214, 203, 41) !important;
+    color: white !important;
+}

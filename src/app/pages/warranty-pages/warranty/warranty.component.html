@@ -1,0 +1,616 @@
+<div class="container-fluid row justify-content-center gap-3">
+
+    <div class="d-flex gap-3">    
+        <form [formGroup]="warrantyFormGroup" class="row gap-3">
+            <div class="row justify-content-center">
+
+                <div class="row card1-container">
+                    <mat-card>
+                        <div class="row">
+                            <div class="title p-2">
+                                <label>Customer Details</label>
+                            </div>
+
+                            <div class="row m-3 gap-3 justify-content-center">
+
+                                <div class="row gap-3">
+
+                                    <div class="col-12 col-sm-6 col-md-4 row">
+
+                                        <div class="col-6">
+                                            <label>Document Type</label>
+                                            <mat-radio-group formControlName="DocumentType" (change)="changeDocumentType()" class="d-flex example-radio-group">
+                                                <mat-radio-button class="example-radio-button" value="WM" matTooltip="With Material">
+                                                    WM
+                                                </mat-radio-button>
+                                                <mat-radio-button class="example-radio-button" value="WO" matTooltip="Without Material">
+                                                    WO
+                                                </mat-radio-button>
+                                            </mat-radio-group>
+                                        </div>
+        
+                                        <div class="col-6">
+                                            <label>Attribution</label>
+                                            <mat-radio-group formControlName="Attribution" class="d-flex example-radio-group">
+                                                <mat-radio-button class="example-radio-button" value="ZWAR">
+                                                ZWAR
+                                                </mat-radio-button>
+                                                <mat-radio-button class="example-radio-button" value="RE">
+                                                    RE
+                                                </mat-radio-button>
+                                            </mat-radio-group>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-6 col-md-4 row justify-content-between">
+                                        <label>Plant</label>
+                                        <mat-form-field appearance="outline">
+                                            <mat-select formControlName="Plant">
+                                                <mat-option *ngFor="let data of plantDetails" [value]="data.Plant">{{data.Plant}} - {{data.SalesOrganization}}</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div class="col-12 col-sm-6 col-md-4 row justify-content-between">
+                                        <div class="d-flex justify-content-between">
+                                            <label>Profit Center</label>
+                                            <span>{{warrantyFormGroup.value.ProfitCenter}}</span>
+                                        </div>
+                                        <mat-form-field appearance="outline">
+                                            <input matInput type="text" formControlName="Segment" readonly>
+                                        </mat-form-field>
+                                    </div>
+
+                                </div>
+
+                                <div class="row gap-3">
+
+                                    <div class="col-12 col-sm-6 col-md-4 row justify-content-between">
+                                        <label>Tracking No</label>
+                                        <mat-form-field appearance="outline">
+                                            <input matInput type="text" formControlName="TrackingNo" readonly>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <!-- <div class="col-12 col-sm-6 col-md-4 row justify-content-between">
+                                        <label>Segment SubSegment</label>
+                                        <mat-form-field appearance="outline">
+                                            <input matInput type="text" formControlName="Segment">
+                                        </mat-form-field>
+                                    </div> -->
+
+                                    <div class="col-12 col-sm-6 col-md-4 row justify-content-between">
+                                        <label>First Approval</label>
+                                        <mat-form-field appearance="outline">
+                                            <mat-label></mat-label>
+                                            <mat-select *ngIf="warrantyFormGroup.get('DocumentType').value == 'WO'" formControlName="FirstApproval">
+                                                <mat-option *ngFor="let approval of filterapproval" [value]="approval.UserId">{{approval.UserName}}</mat-option>
+                                            </mat-select>
+                                            <input matInput *ngIf="warrantyFormGroup.get('DocumentType').value == 'WM'" type="text" formControlName="FirstApproval">
+                                        </mat-form-field>
+                                    </div>
+    
+                                    <div class="col-12 col-sm-6 col-md-4 row justify-content-between">
+                                        <label>Customer Code</label>
+                                        <mat-form-field appearance="outline">
+                                            <mat-label></mat-label>
+                                            <mat-select *ngIf="customerNameList.length != 0" formControlName="CustomerCode" (selectionChange)="onCustomerCodeChange($event)">
+                                                <mat-option *ngFor="let part of customerNameList" [value]="part.CustomerCode">
+                                                    {{part.CustomerCode}}
+                                                </mat-option>
+                                            </mat-select>
+                                            <input *ngIf="customerNameList.length == 0" matInput type="text" formControlName="CustomerCode" readonly>
+                                        </mat-form-field>
+                                    </div>
+    
+                                </div>
+    
+                                <div class="row gap-3">
+
+                                    <div class="col-12 col-sm-6 col-md-4 row justify-content-between">
+                                        <label>Customer Name</label>
+                                        <mat-form-field appearance="outline">
+                                            <mat-label></mat-label>
+                                            <mat-select *ngIf="customerNameList.length != 0" formControlName="CustomerName" (selectionChange)="onCustomerNameChange($event)">
+                                                <mat-option *ngFor="let part of customerNameList" [value]="part.CustomerName">
+                                                    {{part.CustomerName}}
+                                                </mat-option>
+                                            </mat-select>
+                                            <input *ngIf="customerNameList.length == 0" matInput type="text" formControlName="CustomerName" readonly>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div class="row col-12 col-sm-6 col-md-4 justify-content-center claim-container">
+
+                                        <div class="row col-12 col-sm-6 justify-content-center">
+                                            <label>Claim for Month</label>
+                                            <mat-form-field appearance="outline">
+                                                <mat-label></mat-label>
+                                                <mat-select formControlName="ClaimForMonth">
+                                                    <mat-option *ngFor="let month of months" [value]="month">{{month}}</mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+    
+                                        <div class="row col-12 col-sm-6 justify-content-center">
+                                            <label>Claim for Year</label>
+                                            <mat-form-field appearance="outline">
+                                                <mat-label></mat-label>
+                                                <input matInput type="text" maxlength="4" (keypress)="($event.charCode >= 48 && $event.charCode < 58)" formControlName="ClaimForYear">
+                                            </mat-form-field>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row col-12 col-sm-6 col-md-4 justify-content-center" *ngIf="showSaleOrder">
+                                        <label>Sales Order Value</label>
+                                        <mat-form-field appearance="outline">
+                                            <input matInput type="text" formControlName="SalesOrderNo">
+                                        </mat-form-field>
+                                    </div>
+    
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </mat-card>
+                </div>
+
+            </div>
+        </form>
+    </div>
+
+    <div class="row justify-content-between gap-3">
+
+            <button mat-raised-button class="col-12 col-sm-4 col-md-3 UploadBtn" type="button" (click)="uploadInput.click()">
+
+                <mat-icon>upload</mat-icon>
+    
+                <span>Attachment</span>
+    
+                <input #uploadInput type="file" onclick="this.value=null" (change)="onUploadFileChange($event)" style="display:none;" />
+    
+            </button>
+
+            <div class="col-12 col-sm-4 col-md-3 d-flex align-items-center gap-3">
+                <span class="total">Total Value : </span><span>{{totalValue}}</span>
+            </div>
+
+    </div>
+
+    <div class="row justify-content-end gap-3">
+
+        <button mat-raised-button class="col-12 col-sm-4 col-md-3 add-btn" (click)="add()"><mat-icon>add</mat-icon>Add</button>
+            
+        <button mat-raised-button class="col-12 col-sm-4 col-md-3 upload-btn" type="button" (click)="fileInput.click()">
+            <mat-icon>upload</mat-icon>
+            <span>Upload Excel</span>
+            <input #fileInput type="file" onclick="this.value=null" (change)="onFileChange($event)" style="display:none;" />
+        </button>
+
+    </div>
+
+        
+        <div class="example-container">
+
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+            <form [formGroup]="materialFormGroup">
+
+            <div formArrayName="items">
+
+
+                    <ng-container matColumnDef="CustomerPartNo">
+                        <th mat-header-cell *matHeaderCellDef> Customer Part No </th>
+                        <td mat-cell *matCellDef="let element; let index = index" [formGroupName]="index">
+                            <div class="d-flex">
+                                <div>
+                                    <mat-form-field appearance="outline" class="search">
+                                        <mat-label></mat-label>
+                                        <input matInput type="text" formControlName="CustomerPartNo">
+                                    </mat-form-field>
+                                </div>
+                                <div>
+                                    <mat-icon class="search-icon" (click)="searchCustomerPartNo(index)" matSuffix>search</mat-icon>
+                                </div>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <!-- <ng-container matColumnDef="ContiPlant">
+                        <th mat-header-cell *matHeaderCellDef> Conti Plant </th>
+                        <td mat-cell *matCellDef="let element; let index = index" [formGroupName]="index">
+                            <div class="d-flex">
+                                <div>
+                                    <mat-form-field appearance="outline">
+                                        <mat-label></mat-label>
+                                        <mat-select *ngIf="element.ContiPlantList" formControlName="ContiPlant">
+                                            <mat-option *ngFor="let part of element.ContiPlantList" [value]="part">
+                                                {{part}}
+                                            </mat-option>
+                                        </mat-select>
+                                        <input *ngIf="!element.ContiPlantList" matInput type="text" formControlName="ContiPlant">
+                                    </mat-form-field>
+                                </div>
+                                <div>
+                                    <mat-icon *ngIf="element.ContiPlantList" (click)="searchMaterialByPlant(index)" matSuffix>search</mat-icon>
+                                </div>
+                            </div>
+                        </td>
+                    </ng-container> -->
+
+                    <ng-container matColumnDef="ContiPartNo">
+                        <th mat-header-cell *matHeaderCellDef> Conti Part No </th>
+                        <td mat-cell *matCellDef="let element; let index = index" [formGroupName]="index">
+                            <div class="d-flex">
+                                <div>
+                                    <mat-form-field appearance="outline" class="search">
+                                        <mat-label></mat-label>
+                                        <mat-select *ngIf="element.ContiPartNoList" formControlName="ContiPartNo">
+                                            <mat-option *ngFor="let part of element.ContiPartNoList" [value]="part">
+                                                {{part}}
+                                            </mat-option>
+                                        </mat-select>
+                                        <input *ngIf="!element.ContiPartNoList" matInput type="text" formControlName="ContiPartNo">
+                                    </mat-form-field>
+                                </div>
+                                <div>
+                                    <mat-icon *ngIf="element.ContiPartNoList" (click)="searchContiPartNo(index)" matSuffix>search</mat-icon>
+                                </div>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <!-- <ng-container matColumnDef="ProfitCenter">
+                        <th mat-header-cell *matHeaderCellDef> Profit Center </th>
+                        <td mat-cell *matCellDef="let element; let index = index" [formGroupName]="index">
+                            <mat-form-field appearance="outline">
+                                <mat-label></mat-label>
+                                <input matInput type="text" formControlName="ProfitCenter">
+                            </mat-form-field>
+                        </td>
+                    </ng-container> -->
+
+                    <ng-container matColumnDef="MaterialDescription">
+                        <th mat-header-cell *matHeaderCellDef> Material Description </th>
+                        <td mat-cell *matCellDef="let element; let index = index" [formGroupName]="index">
+                            <mat-form-field appearance="outline">
+                                <input matInput type="text" formControlName="MaterialDescription">
+                            </mat-form-field>
+                        </td>
+                    </ng-container>
+
+                    <!-- <ng-container matColumnDef="ContiSegment">
+                        <th mat-header-cell *matHeaderCellDef> Conti Segment </th>
+                        <td mat-cell *matCellDef="let element; let index = index" [formGroupName]="index">
+                            <mat-form-field appearance="outline">
+                                <input matInput type="text" formControlName="ContiSegment">
+                            </mat-form-field>
+                        </td>
+                    </ng-container> -->
+
+                    <!-- <ng-container matColumnDef="ContiSubSegment">
+                        <th mat-header-cell *matHeaderCellDef> Conti Sub Segment </th>
+                        <td mat-cell *matCellDef="let element; let index = index" [formGroupName]="index">
+                            <mat-form-field appearance="outline">
+                                <input matInput type="text" formControlName="ContiSubSegment">
+                            </mat-form-field>
+                        </td>
+                    </ng-container> -->
+
+                    <ng-container matColumnDef="OEMPostReference">
+                        <th mat-header-cell *matHeaderCellDef> OEM Post Reference </th>
+                        <td mat-cell *matCellDef="let element; let index = index" [formGroupName]="index">
+                            <mat-form-field appearance="outline">
+                                <mat-label></mat-label>
+                                <input matInput type="text" formControlName="OEMPostReference">
+                            </mat-form-field>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="CarModel">
+                        <th mat-header-cell *matHeaderCellDef> Car Model </th>
+                        <td mat-cell *matCellDef="let element; let index = index" [formGroupName]="index">
+                            <mat-form-field appearance="outline">
+                                <input matInput type="text" formControlName="CarModel">
+                            </mat-form-field>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Currency">
+                        <th mat-header-cell *matHeaderCellDef> Currency </th>
+                        <td mat-cell *matCellDef="let element; let index = index" [formGroupName]="index">
+                            <mat-form-field appearance="outline">
+                                <mat-label></mat-label>
+                                <mat-select formControlName="Currency">
+                                    <mat-option value="INR">INR</mat-option>
+                                    <mat-option value="INR">USD</mat-option>
+                                    <mat-option value="INR">EUR</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </td>
+                    </ng-container>  
+                    
+                    <ng-container matColumnDef="DealerName">
+                        <th mat-header-cell *matHeaderCellDef> Dealer Name </th>
+                        <td mat-cell *matCellDef="let element; let index = index" [formGroupName]="index">
+                            <mat-form-field appearance="outline">
+                                <input matInput type="text" formControlName="DealerName">
+                            </mat-form-field>
+                        </td>
+                    </ng-container>
+                    
+                    <ng-container matColumnDef="ProblemDescription">
+                        <th mat-header-cell *matHeaderCellDef> Problem Description </th>
+                        <td mat-cell *matCellDef="let element; let index = index" [formGroupName]="index">
+                            <mat-form-field appearance="outline">
+                                <input matInput type="text" formControlName="ProblemDescription">
+                            </mat-form-field>
+                        </td>
+                    </ng-container>
+                    
+                    <ng-container matColumnDef="DealerLocation">
+                        <th mat-header-cell *matHeaderCellDef> Dealer Location </th>
+                        <td mat-cell *matCellDef="let element; let index = index" [formGroupName]="index">
+                            <mat-form-field appearance="outline">
+                                <input matInput type="text" formControlName="DealerLocation">
+                            </mat-form-field>
+                        </td>
+                    </ng-container> 
+                    
+                    <ng-container matColumnDef="Quantity">
+                        <th mat-header-cell *matHeaderCellDef> Qty </th>
+                        <td mat-cell *matCellDef="let element; let index = index" [formGroupName]="index">
+                            <mat-form-field appearance="outline">
+                                <mat-label></mat-label>
+                                <input matInput type="text" formControlName="Quantity">
+                            </mat-form-field>
+                        </td>
+                    </ng-container> 
+                    
+                    <ng-container matColumnDef="VIN">
+                        <th mat-header-cell *matHeaderCellDef> VIN </th>
+                        <td mat-cell *matCellDef="let element; let index = index" [formGroupName]="index">
+                            <mat-form-field appearance="outline">
+                                <input matInput type="text" formControlName="VIN">
+                            </mat-form-field>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="CQTSQN">
+                        <th mat-header-cell *matHeaderCellDef> CQTS QN </th>
+                        <td mat-cell *matCellDef="let element; let index = index" [formGroupName]="index">
+                            <mat-form-field appearance="outline">
+                                <input matInput type="text" formControlName="CQTSQN">
+                            </mat-form-field>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="ContiProductionDate">
+                        <th mat-header-cell *matHeaderCellDef> Vehicle Production Date  </th>
+                        <td mat-cell *matCellDef="let element; let index = index" [formGroupName]="index">
+                            <mat-form-field class="search" appearance="outline">
+                                <input matInput [matDatepicker]="ProdcutDate" formControlName="ContiProductionDate">
+                                <mat-icon matSuffix (click)="ProdcutDate.open()">date_range</mat-icon>
+                                <mat-datepicker #ProdcutDate></mat-datepicker>
+                            </mat-form-field>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="RegistrationDate">
+                        <th mat-header-cell *matHeaderCellDef> Registration Date  </th>
+                        <td mat-cell *matCellDef="let element; let index = index" [formGroupName]="index">
+                            <mat-form-field class="search" appearance="outline">
+                                <input matInput type="text" [matDatepicker]="RegistrationDate" formControlName="RegistrationDate">
+                                <mat-icon matSuffix (click)="RegistrationDate.open()">date_range</mat-icon>
+                                <mat-datepicker #RegistrationDate></mat-datepicker>
+                            </mat-form-field>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="RepairDate">
+                        <th mat-header-cell *matHeaderCellDef> Repair Date </th>
+                        <td mat-cell *matCellDef="let element; let index = index" [formGroupName]="index">
+                            <mat-form-field class="search" appearance="outline">
+                                <input matInput type="text" [matDatepicker]="RepairDate" formControlName="RepairDate">
+                                <mat-icon matSuffix (click)="RepairDate.open()">date_range</mat-icon>
+                                <mat-datepicker #RepairDate></mat-datepicker>
+                            </mat-form-field>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="ReturnDate">
+                        <th mat-header-cell *matHeaderCellDef> Return Date </th>
+                        <td mat-cell *matCellDef="let element; let index = index" [formGroupName]="index">
+                            <mat-form-field class="search" appearance="outline">
+                                <input matInput [matDatepicker]="ReturnDate" formControlName="ReturnDate">
+                                <mat-icon matSuffix (click)="ReturnDate.open()">date_range</mat-icon>
+                                <mat-datepicker #ReturnDate></mat-datepicker>
+                            </mat-form-field>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Mileage">
+                        <th mat-header-cell *matHeaderCellDef> Mileage </th>
+                        <td mat-cell *matCellDef="let element; let index = index" [formGroupName]="index">
+                            <mat-form-field appearance="outline">
+                                <input matInput type="text" formControlName="Mileage">
+                            </mat-form-field>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="SaleValue">
+                        <th mat-header-cell *matHeaderCellDef> Sale Value </th>
+                        <td mat-cell *matCellDef="let element; let index = index" [formGroupName]="index">
+                            <mat-form-field appearance="outline">
+                                <input matInput type="text" formControlName="SaleValue">
+                            </mat-form-field>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="BaseClaimValue">
+                        <th mat-header-cell *matHeaderCellDef> Base Claim Value </th>
+                        <td mat-cell *matCellDef="let element; let index = index" [formGroupName]="index">
+                            <mat-form-field appearance="outline">
+                                <input matInput type="number" formControlName="BaseClaimValue">
+                            </mat-form-field>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Handling">
+                        <th mat-header-cell *matHeaderCellDef> Handling </th>
+                        <td mat-cell *matCellDef="let element; let index = index" [formGroupName]="index">
+                            <mat-form-field appearance="outline">
+                                <input matInput type="number" formControlName="Handling">
+                            </mat-form-field>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="LabourCost">
+                        <th mat-header-cell *matHeaderCellDef> Labour Cost </th>
+                        <td mat-cell *matCellDef="let element; let index = index" [formGroupName]="index">
+                            <mat-form-field appearance="outline">
+                                <input matInput type="number" formControlName="LabourCost">
+                            </mat-form-field>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="RepairCost">
+                        <th mat-header-cell *matHeaderCellDef> Repair Cost </th>
+                        <td mat-cell *matCellDef="let element; let index = index" [formGroupName]="index">
+                            <mat-form-field appearance="outline">
+                                <input matInput type="number" formControlName="RepairCost">
+                            </mat-form-field>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="ForwardingCost">
+                        <th mat-header-cell *matHeaderCellDef> Forwarding Cost </th>
+                        <td mat-cell *matCellDef="let element; let index = index" [formGroupName]="index">
+                            <mat-form-field appearance="outline">
+                                <input matInput type="number" formControlName="ForwardingCost">
+                            </mat-form-field>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="SubletCost">
+                        <th mat-header-cell *matHeaderCellDef> Sublet Cost </th>
+                        <td mat-cell *matCellDef="let element; let index = index" [formGroupName]="index">
+                            <mat-form-field appearance="outline">
+                                <input matInput type="number" formControlName="SubletCost">
+                            </mat-form-field>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="ConsequentialCost">
+                        <th mat-header-cell *matHeaderCellDef> Other Consequential Cost </th>
+                        <td mat-cell *matCellDef="let element; let index = index" [formGroupName]="index">
+                            <mat-form-field appearance="outline">
+                                <input matInput type="number" formControlName="ConsequentialCost">
+                            </mat-form-field>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="TotalClaimValue">
+                        <th mat-header-cell *matHeaderCellDef> Total Claim Value </th>
+                        <td mat-cell *matCellDef="let element; let index = index" [formGroupName]="index">
+                            <div class="d-flex">
+                                <div>
+                                    <mat-form-field appearance="outline">
+                                        <mat-label></mat-label>
+                                        <input matInput type="number" formControlName="TotalClaimValue">
+                                    </mat-form-field>
+                                </div>
+                                <div>
+                                    <mat-icon (click)="totalClaimValue(index)" matSuffix>add_circle</mat-icon>
+                                </div>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="TechnicalFactor">
+                        <th mat-header-cell *matHeaderCellDef> Technical Fator </th>
+                        <td mat-cell *matCellDef="let element; let index = index" [formGroupName]="index">
+                            <mat-form-field appearance="outline">
+                                <input matInput type="text" formControlName="TechnicalFactor">
+                            </mat-form-field>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="FinalClaimValue">
+                        <th mat-header-cell *matHeaderCellDef> Final Claim Vaue </th>
+                        <td mat-cell *matCellDef="let element; let index = index" [formGroupName]="index">
+                            <mat-form-field appearance="outline">
+                                <input matInput type="number" formControlName="FinalClaimValue">
+                            </mat-form-field>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Tax">
+                        <th mat-header-cell *matHeaderCellDef> Tax </th>
+                        <td mat-cell *matCellDef="let element; let index = index" [formGroupName]="index">
+                            <mat-form-field appearance="outline">
+                                <input matInput type="number" formControlName="Tax">
+                            </mat-form-field>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="DebitValue">
+                        <th mat-header-cell *matHeaderCellDef> Debit Value </th>
+                        <td mat-cell *matCellDef="let element; let index = index" [formGroupName]="index">
+                            <div class="d-flex">
+                                <div>
+                                    <mat-form-field appearance="outline">
+                                        <mat-label></mat-label>
+                                        <input matInput type="number" formControlName="DebitValue">
+                                    </mat-form-field>
+                                </div>
+                                <div>
+                                    <mat-icon (click)="debitValue(index)" matSuffix>add_circle</mat-icon>
+                                </div>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Remarks">
+                        <th mat-header-cell *matHeaderCellDef> Remarks</th>
+                        <td mat-cell *matCellDef="let element; let index = index" [formGroupName]="index">
+                            <mat-form-field appearance="outline">
+                                <input matInput type="text" formControlName="Remarks">
+                            </mat-form-field>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Remove" stickyEnd>
+                        <th mat-header-cell *matHeaderCellDef> Remove </th>
+                        <td mat-cell *matCellDef="let element; index as i"> <mat-icon class="delete" (click)="remove(i)">delete</mat-icon> </td>
+                    </ng-container>
+
+                
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky : true"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+
+            </div>
+
+            </form>
+
+        </table>
+        </div>
+        <!-- <div *ngIf="!tableData.length" class="d-flex align-items-center p-3 gap-3">
+            <mat-icon>info</mat-icon>
+            <span>No Records Found.....</span>
+        </div> -->
+    
+        <!-- <mat-paginator [style.display]="tableData?.length?'inherit':'none'"
+        [length]="tableData?.length" [pageSize]="3" [pageSizeOptions]="[3, 10, 25, 100]"
+        aria-label="Select page">
+        </mat-paginator> -->
+
+    <div class="d-flex justify-content-end gap-3">
+        <button mat-raised-button class="cancel-btn" routerLink="/pages/warrantypages/dashboard"><mat-icon> cancel_presentation</mat-icon>Cancel</button>
+        <button mat-raised-button class="execute-btn" *ngIf="showExecutebtn" (click)="execute()"> <mat-icon>save</mat-icon> Execute</button>
+        <button mat-raised-button class="execute-btn" *ngIf="!showExecutebtn" (click)="updateWarranty()">	<mat-icon>update</mat-icon> Update</button>
+    </div>
+
+</div>

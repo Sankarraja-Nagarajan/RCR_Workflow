@@ -1,0 +1,428 @@
+<div class="approval row justify-content-center gap-3">
+
+    <div class="d-flex gap-3">
+        <button mat-raised-button class="back-btn" routerLink="/pages/warrantypages/dashboard"><mat-icon>arrow_back</mat-icon>Back</button>
+        <button mat-raised-button class="edit-btn" *ngIf="editbtn" (click)="edit()"><mat-icon>edit</mat-icon>Edit</button>
+    </div>
+
+    <div class="row gy-3 justify-content-between">
+
+        <div class="col-12 col-md-6">
+
+            <div class="box row justify-content-center">
+                <span class="title row  ps-4 p-2">WARRANTY DETAILS</span>
+                <div class="TitleBorder"></div>
+                <div class="p-2 w-75 row gap-2">
+                    <div class="d-flex justify-content-between">
+                        <div class="subtitle-text">Tracking No</div>
+                        <div>{{tableData[0]?.TrackingNo}}</div>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <div class="subtitle-text">Document Type</div>
+                        <div>{{tableData[0]?.DocumentType}}</div>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <div class="subtitle-text">Attribution</div>
+                        <div>{{tableData[0]?.Attribution}}</div>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <div class="subtitle-text">Plant</div>
+                        <div>{{tableData[0]?.ContiPlant}}</div>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <div class="subtitle-text">Profit Center</div>
+                        <div>{{tableData[0]?.ProfitCenter}}</div>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <div class="subtitle-text">Total Value</div>
+                        <div>{{totalValue}}</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-12 col-md-5">
+            <div class="box" *ngIf="userDetails.Role == 'A'">
+                <span class="title row  ps-4 p-2">REASON FOR REJECTION</span>
+                <div class="TitleBorder"></div>
+                <div class="p-2">
+                    <form [formGroup]="rejectFormGroup">
+                        <mat-form-field appearance="outline" class="select selectbox">
+                            <mat-select formControlName="reasonForRejection">
+                                <mat-option *ngFor="let reason of rejection" [value]="reason">
+                                    {{reason}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" class="select">
+                            <mat-label>Comments</mat-label>
+                            <textarea matInput formControlName="comments"></textarea>
+                        </mat-form-field>
+                    </form>
+                </div>
+            </div>
+            <div class="row gap-2 mt-2">
+                <div class="col">
+                    <button class="attachment-btn" mat-raised-button (click)="downloadAttachment()"><mat-icon>download</mat-icon>Attachment Download</button>
+                </div>
+                <div class="col d-flex gap-2"  *ngIf="userDetails.Role == 'A'">
+                    <button mat-raised-button *ngIf="showApprovebtn" class="approve-btn" (click)="approve()"><mat-icon>done</mat-icon>Approve</button>
+                    <button mat-raised-button *ngIf="showApprovebtn" class="cancel-btn" (click)="reject()"><mat-icon>clear</mat-icon>Reject</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="row gap-3">
+
+
+        <div *ngIf="showRejectTable">
+            <div class="borders">
+                <span class="p-3">Rejection Histories</span>
+            </div>
+            <div class="borderstraight"></div>
+            <mat-card>
+                <mat-card-content>
+                    <div class="row table-container overflow-auto">
+                        <table mat-table [dataSource]="rejectDataSource">
+
+                            <ng-container matColumnDef="userId-col">
+                                <th mat-header-cell *matHeaderCellDef> User Id </th>
+                                <td mat-cell *matCellDef="let element"> {{element.UserId}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="role-col">
+                                <th mat-header-cell *matHeaderCellDef> Role </th>
+                                <td mat-cell *matCellDef="let element"> {{element.Role}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="userName-col">
+                                <th mat-header-cell *matHeaderCellDef> User Name </th>
+                                <td mat-cell *matCellDef="let element"> {{element.UserName}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="reason-col">
+                                <th mat-header-cell *matHeaderCellDef> Reason </th>
+                                <td mat-cell *matCellDef="let element"> {{element.Reason}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="comments-col">
+                                <th mat-header-cell *matHeaderCellDef> Comments </th>
+                                <td mat-cell *matCellDef="let element"> {{element.Comments}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="date-col">
+                                <th mat-header-cell *matHeaderCellDef> Rejected On </th>
+                                <td mat-cell *matCellDef="let element">
+                                    {{element.RejectedOn | date : 'dd/MM/yyyy' }}
+                                </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="rejectColumns; sticky : true"></tr>
+                            <tr mat-row *matRowDef="let row; columns: rejectColumns;"></tr>
+
+                        </table>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+
+
+        <div>
+            <div class="borders">
+                <span class="p-3">Users Table</span>
+            </div>
+            <div class="borderstraight"></div>
+            <mat-card>
+                <mat-card-content>
+                    <div class="row table-container overflow-auto">
+                        <table mat-table [dataSource]="approveDataSource">
+
+                            <ng-container matColumnDef="userId-col">
+                                <th mat-header-cell *matHeaderCellDef> User Id </th>
+                                <td mat-cell *matCellDef="let element"> {{element.UserId}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="role-col">
+                                <th mat-header-cell *matHeaderCellDef> Role </th>
+                                <td mat-cell *matCellDef="let element"> {{element.Role}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="userName-col">
+                                <th mat-header-cell *matHeaderCellDef> User Name </th>
+                                <td mat-cell *matCellDef="let element"> {{element.UserName}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="reason-col">
+                                <th mat-header-cell *matHeaderCellDef> Reason </th>
+                                <td mat-cell *matCellDef="let element"> {{element.ReasonForRejection}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="comments-col">
+                                <th mat-header-cell *matHeaderCellDef> Comments </th>
+                                <td mat-cell *matCellDef="let element"> {{element.Comments}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="status-col">
+                                <th mat-header-cell *matHeaderCellDef> Status </th>
+                                <td mat-cell *matCellDef="let element">
+                                    <span class="created" *ngIf="element.Status == 'Created'">{{element.Status}}</span>
+                                    <span class="recreated" *ngIf="element.Status == 'Re-Created'">{{element.Status}}</span>
+                                    <span class="approved" *ngIf="element.Status == 'Approved'">{{element.Status}}</span>
+                                    <!-- <span class="active" *ngIf="element.Status == 'Active'">{{element.Status}}</span> -->
+                                    <span class="pending" *ngIf="element.Status == 'Active'">Pending</span>
+                                    <span class="rejected" *ngIf="element.Status == 'Rejected'">{{element.Status}}</span>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="date-col">
+                                <th mat-header-cell *matHeaderCellDef> Approved On </th>
+                                <td mat-cell *matCellDef="let element"> {{element.ApprovedOn | date : 'dd/MM/yyyy'}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="edit-col">
+                                <th mat-header-cell *matHeaderCellDef> Edit </th>
+                                <td mat-cell *matCellDef="let element"> <mat-icon class="edit" (click)="editUser(element)" *ngIf="element.status != 'Approved'">edit</mat-icon> </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="approvedColumns; sticky : true"></tr>
+                            <tr mat-row *matRowDef="let row; columns: approvedColumns;"></tr>
+
+                        </table>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+
+
+        <div>
+            <div class="borders">
+                <span class="p-3">Materials Table</span>
+            </div>
+            <div class="borderstraight"></div>
+            <mat-card>
+                <mat-card-content>
+                    <div class="row table-container overflow-auto">
+                        <table mat-table [dataSource]="dataSource">
+
+
+
+
+                            <ng-container matColumnDef="DocumentType">
+                                <th mat-header-cell *matHeaderCellDef> Document Type </th>
+                                <td mat-cell *matCellDef="let element"> {{element.DocumentType}} </td>
+                            </ng-container>
+                
+                            <ng-container matColumnDef="Attribution">
+                                <th mat-header-cell *matHeaderCellDef> Attribution </th>
+                                <td mat-cell *matCellDef="let element"> {{element.Attribution}} </td>
+                            </ng-container>
+                
+                            <ng-container matColumnDef="CustomerPartNo">
+                                <th mat-header-cell *matHeaderCellDef> Customer Part No </th>
+                                <td mat-cell *matCellDef="let element"> {{element.CustomerPartNo}} </td>
+                            </ng-container>
+                
+                            <ng-container matColumnDef="ContiPlant">
+                                <th mat-header-cell *matHeaderCellDef> Conti Plant </th>
+                                <td mat-cell *matCellDef="let element"> {{element.ContiPlant}} </td>
+                            </ng-container>
+                
+                            <ng-container matColumnDef="CustomerCode">
+                                <th mat-header-cell *matHeaderCellDef> Customer Code </th>
+                                <td mat-cell *matCellDef="let element"> {{element.CustomerCode}} </td>
+                            </ng-container>
+                
+                            <ng-container matColumnDef="CustomerName">
+                                <th mat-header-cell *matHeaderCellDef> Customer Name </th>
+                                <td mat-cell *matCellDef="let element"> {{element.CustomerName}} </td>
+                            </ng-container>
+                
+                            <ng-container matColumnDef="ContiPartNo">
+                                <th mat-header-cell *matHeaderCellDef> Conti Part No </th>
+                                <td mat-cell *matCellDef="let element"> {{element.ContiPartNo}} </td>
+                            </ng-container>
+                
+                            <ng-container matColumnDef="ProfitCenter">
+                                <th mat-header-cell *matHeaderCellDef> Profit Center </th>
+                                <td mat-cell *matCellDef="let element"> {{element.ProfitCenter}} </td>
+                            </ng-container>
+                
+                            <ng-container matColumnDef="MaterialDescription">
+                                <th mat-header-cell *matHeaderCellDef> Material Description </th>
+                                <td mat-cell *matCellDef="let element"> {{element.MaterialDescription}} </td>
+                            </ng-container>
+                
+                            <ng-container matColumnDef="ContiSegment">
+                                <th mat-header-cell *matHeaderCellDef> Conti Segment </th>
+                                <td mat-cell *matCellDef="let element"> {{element.ContiSegment}} </td>
+                            </ng-container>
+                
+                            <ng-container matColumnDef="ContiSubSegment">
+                                <th mat-header-cell *matHeaderCellDef> Conti Sub Segment </th>
+                                <td mat-cell *matCellDef="let element"> {{element.ContiSubSegment}} </td>
+                            </ng-container>
+                
+                            <ng-container matColumnDef="OEMPostReference">
+                                <th mat-header-cell *matHeaderCellDef> OEM Post Reference </th>
+                                <td mat-cell *matCellDef="let element"> {{element.OemPostReference}} </td>
+                            </ng-container>
+                
+                            <ng-container matColumnDef="CarModel">
+                                <th mat-header-cell *matHeaderCellDef> Car Model </th>
+                                <td mat-cell *matCellDef="let element"> {{element.CarModel}} </td>
+                            </ng-container>
+                
+                            <ng-container matColumnDef="Currency">
+                                <th mat-header-cell *matHeaderCellDef> Currency </th>
+                                <td mat-cell *matCellDef="let element"> {{element.Currency}} </td>
+                            </ng-container>  
+                            
+                            <ng-container matColumnDef="DealerName">
+                                <th mat-header-cell *matHeaderCellDef> Dealer Name </th>
+                                <td mat-cell *matCellDef="let element"> {{element.DealerName}} </td>
+                            </ng-container>
+                            
+                            <ng-container matColumnDef="ProblemDescription">
+                                <th mat-header-cell *matHeaderCellDef> Problem Description </th>
+                                <td mat-cell *matCellDef="let element"> {{element.ProblemDescription}} </td>
+                            </ng-container>
+                            
+                            <ng-container matColumnDef="DealerLocation">
+                                <th mat-header-cell *matHeaderCellDef> Dealer Location </th>
+                                <td mat-cell *matCellDef="let element"> {{element.DealerLocation}} </td>
+                            </ng-container> 
+                            
+                            <ng-container matColumnDef="Quantity">
+                                <th mat-header-cell *matHeaderCellDef> Qty </th>
+                                <td mat-cell *matCellDef="let element"> {{element.Quantity}} </td>
+                            </ng-container> 
+                            
+                            <ng-container matColumnDef="VIN">
+                                <th mat-header-cell *matHeaderCellDef> VIN </th>
+                                <td mat-cell *matCellDef="let element"> {{element.Vin}} </td>
+                            </ng-container>
+                
+                            <ng-container matColumnDef="CQTSQN">
+                                <th mat-header-cell *matHeaderCellDef> CQTS QN </th>
+                                <td mat-cell *matCellDef="let element"> {{element.CqtsQn}} </td>
+                            </ng-container>
+                
+                            <ng-container matColumnDef="ContiProductionDate">
+                                <th mat-header-cell *matHeaderCellDef> Vehicle Production Date  </th>
+                                <td mat-cell *matCellDef="let element"> {{element.ContiProductionDate | date : 'dd/MM/yyyy' }} </td>
+                            </ng-container>
+                
+                            <ng-container matColumnDef="RegistrationDate">
+                                <th mat-header-cell *matHeaderCellDef> Registration Date  </th>
+                                <td mat-cell *matCellDef="let element"> {{element.RegistrationDate | date : 'dd/MM/yyyy' }} </td>
+                            </ng-container>
+                
+                            <ng-container matColumnDef="RepairDate">
+                                <th mat-header-cell *matHeaderCellDef> Repair Date </th>
+                                <td mat-cell *matCellDef="let element"> {{element.RepairDate | date : 'dd/MM/yyyy' }} </td>
+                            </ng-container>
+                
+                            <ng-container matColumnDef="ReturnDate">
+                                <th mat-header-cell *matHeaderCellDef> Return Date </th>
+                                <td mat-cell *matCellDef="let element"> {{element.ReturnDate | date : 'dd/MM/yyyy' }} </td>
+                            </ng-container>
+                
+                            <ng-container matColumnDef="Mileage">
+                                <th mat-header-cell *matHeaderCellDef> Mileage </th>
+                                <td mat-cell *matCellDef="let element"> {{element.Mileage}} </td>
+                            </ng-container>
+                
+                            <ng-container matColumnDef="SaleValue">
+                                <th mat-header-cell *matHeaderCellDef> Sale Value </th>
+                                <td mat-cell *matCellDef="let element"> {{element.SaleValue}} </td>
+                            </ng-container>
+                
+                            <ng-container matColumnDef="BaseClaimValue">
+                                <th mat-header-cell *matHeaderCellDef> Base Claim Value </th>
+                                <td mat-cell *matCellDef="let element"> {{element.BaseClaimValue}} </td>
+                            </ng-container>
+                
+                            <ng-container matColumnDef="Handling">
+                                <th mat-header-cell *matHeaderCellDef> Handling </th>
+                                <td mat-cell *matCellDef="let element"> {{element.Handling}} </td>
+                            </ng-container>
+                
+                            <ng-container matColumnDef="LabourCost">
+                                <th mat-header-cell *matHeaderCellDef> Labour Cost </th>
+                                <td mat-cell *matCellDef="let element"> {{element.LabourCost}} </td>
+                            </ng-container>
+                
+                            <ng-container matColumnDef="RepairCost">
+                                <th mat-header-cell *matHeaderCellDef> Repair Cost </th>
+                                <td mat-cell *matCellDef="let element"> {{element.RepairCost}} </td>
+                            </ng-container>
+                
+                            <ng-container matColumnDef="ForwardingCost">
+                                <th mat-header-cell *matHeaderCellDef> Forwarding Cost </th>
+                                <td mat-cell *matCellDef="let element"> {{element.ForwardingCost}} </td>
+                            </ng-container>
+                
+                            <ng-container matColumnDef="SubletCost">
+                                <th mat-header-cell *matHeaderCellDef> Sublet Cost </th>
+                                <td mat-cell *matCellDef="let element"> {{element.SubletCost}} </td>
+                            </ng-container>
+                
+                            <ng-container matColumnDef="ConsequentialCost">
+                                <th mat-header-cell *matHeaderCellDef> Other Consequential Cost </th>
+                                <td mat-cell *matCellDef="let element"> {{element.ConsequentialCost}} </td>
+                            </ng-container>
+                
+                            <ng-container matColumnDef="TotalClaimValue">
+                                <th mat-header-cell *matHeaderCellDef> Total Claim Value </th>
+                                <td mat-cell *matCellDef="let element"> {{element.TotalClaimValue}} </td>
+                            </ng-container>
+                
+                            <ng-container matColumnDef="TechnicalFactor">
+                                <th mat-header-cell *matHeaderCellDef> Technical Fator </th>
+                                <td mat-cell *matCellDef="let element"> {{element.TechnicalFactor}} </td>
+                            </ng-container>
+                
+                            <ng-container matColumnDef="FinalClaimValue">
+                                <th mat-header-cell *matHeaderCellDef> Final Claim Vaue </th>
+                                <td mat-cell *matCellDef="let element"> {{element.FinalClaimValue}} </td>
+                            </ng-container>
+                
+                            <ng-container matColumnDef="Tax">
+                                <th mat-header-cell *matHeaderCellDef> Tax </th>
+                                <td mat-cell *matCellDef="let element"> {{element.Tax}} </td>
+                            </ng-container>
+                
+                            <ng-container matColumnDef="DebitValue">
+                                <th mat-header-cell *matHeaderCellDef> Debit Value </th>
+                                <td mat-cell *matCellDef="let element"> {{element.DebitValue}} </td>
+                            </ng-container>
+                
+                            <ng-container matColumnDef="Remarks">
+                                <th mat-header-cell *matHeaderCellDef> Remarks</th>
+                                <td mat-cell *matCellDef="let element"> {{element.Remarks}} </td>
+                            </ng-container>          
+                                        
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky : true"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                        </table>
+                        <div *ngIf="!tableData?.length" style="background-color: white;">
+                            <mat-icon class="icon justify-content-start">info</mat-icon>
+                            <span>No Records Found...!</span>
+                        </div>
+                        <!-- <mat-paginator class="justify-content-end p-0" [style.display]="tableData?.length?'inherit':'none'"
+                            [length]="tableData?.length" [pageSize]="3" [pageSizeOptions]="[3, 10, 25, 100]"
+                            aria-label="Select page">
+                        </mat-paginator> -->
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+
+    
+</div>

@@ -7,3 +7,17 @@
     padding-top: nb-theme(layout-padding-top);
   }
 }
+
+.content-padding
+{
+  padding: 0px !important;
+}
+
+nb-layout-column{
+  // background-color: white;
+  background-color: rgba(245, 245, 245, 0.568);
+}
+
+nb-layout-header{
+    background-image: url("/assets/images/orange_box.jpg");
+}

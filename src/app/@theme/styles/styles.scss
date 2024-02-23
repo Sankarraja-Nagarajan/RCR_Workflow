@@ -3,6 +3,8 @@
 // themes - our custom or/and out of the box themes
 @import 'themes';
 
+@import 'ngx-toastr/toastr';
+
 // framework component themes (styles tied to theme variables)
 @import '@nebular/theme/styles/globals';
 @import '@nebular/auth/styles/globals';
@@ -36,3 +38,26 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+
+// snackbarClasses
+.success {
+  --mdc-snackbar-container-color: #26b329 !important;
+  --mdc-snackbar-supporting-text-color: white !important;
+}
+
+.danger {
+  --mdc-snackbar-container-color: #d6201d !important;
+  --mdc-snackbar-supporting-text-color: white !important;
+}
+
+.warning {
+  --mdc-snackbar-container-color: #ee9a2c !important;
+  --mdc-snackbar-supporting-text-color: white !important;
+}
+
+.info {
+  --mdc-snackbar-container-color: #1992ce !important;
+  --mdc-snackbar-supporting-text-color: white !important;
+}

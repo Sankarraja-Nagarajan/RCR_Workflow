@@ -1,0 +1,41 @@
+<div class="login">
+    <div class="row">
+        <div class="loginBg col-md-8 d-flex d-none d-md-block">
+        </div>
+        <div class="loginForm col-md-4">
+            <div class="logo d-flex justify-content-center">
+              <img src="/assets/images/Conti_LoginImage.png">
+            </div>
+            <div class="rcr-title d-flex justify-content-center">RCR WORKFLOW</div>
+            <div class="title mt-2 d-flex justify-content-center">Sign In</div>
+            <div class="subTitle d-flex justify-content-center mt-4">Welcome back ! Please Sign In to continue</div>
+            <form [formGroup]="loginForm" class="row justify-content-center mt-4 w-100">
+                <mat-form-field class="formField" appearance="outline">
+                    <mat-label>User Id</mat-label>
+                    <input matInput  formControlName="UserId">
+                    <mat-icon matSuffix>person icon</mat-icon>
+                    <mat-error *ngIf="loginForm.get('UserId')?.hasError('required')">
+                      UserId is Required
+                  </mat-error>
+                </mat-form-field>
+                  
+                <mat-form-field class="formField" appearance="outline">
+                    <mat-label>Password</mat-label>
+                    <input matInput [type]="hide ? 'password' : 'text'"  formControlName="Password">
+                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                      <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>                  
+                    <mat-error *ngIf="loginForm.get('Password')?.hasError('required')">
+                      Password is Required
+                    </mat-error>
+                </mat-form-field>
+                 <div (click)="OpenForgotPasswordDialog('Forgot Password')"><div class="col-10 d-flex justify-content-end forgotPassword">Forgot Password?</div></div>
+                 <div  class="d-flex justify-content-center">
+                  <button  mat-raised-button class="submit-button" aria-label="LOGIN" (click)="login()">
+                    <span class="loginButton">LOG IN </span>
+                  </button>
+                 </div>
+            </form>
+        </div>
+    </div>
+</div>

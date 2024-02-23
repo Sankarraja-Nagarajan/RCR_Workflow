@@ -1,0 +1,136 @@
+<div class="row gap-3">
+
+    <div class="report-container">
+        <mat-card>
+
+            <form [formGroup]="reportFormGroup">
+
+                <div class="row gap-3 m-3">
+
+                    <div class="row">
+                        <!-- <div> <b>Notes : </b> &nbsp;&nbsp;&nbsp; <b>*</b> For single entry (eg: 1000) &nbsp;&nbsp;&nbsp;
+                              <b>*</b> For range provide '-' inbetween tracking id (eg: 1000-1010) &nbsp;&nbsp;&nbsp;
+                              <b>*</b> For multiple tracking id's use ',' between the tracking id (eg. 1000,1005)</div> -->
+                        <div class="col-6 col-sm-3 d-flex align-items-center justify-content-between"> Tracking Id <mat-icon>label</mat-icon></div>
+                        <mat-form-field class="col-6 col-sm-3" appearance="outline">
+                            <mat-label>Enter Tracking Id</mat-label>
+                            <input matInput type="text" formControlName="TrackingNo" (keypress)="($event.charCode >= 44 && $event.charCode < 58)">
+                        </mat-form-field>
+                        <div class="col-6 col-sm-2 d-flex align-items-center">
+                            <mat-icon matTooltip="For single entry (eg: 1000).
+                                                  For range provide '-' inbetween tracking id (eg: 1000-1010).
+                                                  For multiple tracking id's use ',' between the tracking id (eg. 1000,1005)">information</mat-icon>
+                        </div>
+                        <!-- <div class="col-6 col-sm-6 d-flex align-items-center">
+                            <ul>
+                                <li>For single entry (eg: 1000)</li>
+                                <li>For range provide <b> '-' </b> inbetween tracking id (eg: 1000-1010)</li>
+                                <li>For multiple tracking id's use <b> ',' </b> between the tracking id (eg. 1000,1005)</li>
+                            </ul>
+                        </div> -->
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6 col-sm-3 d-flex align-items-center justify-content-between"> Created Date <mat-icon>label</mat-icon></div>
+                        <mat-form-field class="col-6 col-sm-3" appearance="outline" *ngIf="changeDatefield">
+                            <mat-label>From</mat-label>
+                            <input matInput [matDatepicker]="fromDatepicker" formControlName="CreatedFrom">
+                            <mat-datepicker-toggle matSuffix [for]="fromDatepicker"></mat-datepicker-toggle>
+                            <mat-datepicker #fromDatepicker></mat-datepicker>
+                        </mat-form-field>
+                        <mat-form-field class="col-6 col-sm-3" appearance="outline" *ngIf="changeDatefield">
+                            <mat-label>To</mat-label>
+                            <input matInput [matDatepicker]="toDatepicker" formControlName="CreatedTo">
+                            <mat-datepicker-toggle matSuffix [for]="toDatepicker"></mat-datepicker-toggle>
+                            <mat-datepicker #toDatepicker></mat-datepicker>
+                        </mat-form-field>
+                        <mat-form-field class="col-6 col-sm-3" appearance="outline" *ngIf="!changeDatefield">
+                                <input matInput [matDatepicker]="picker" placeholder="Choose a date" (dateChange)="dateChanged($event)" formControlName="CreatedParticularDate">
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                        <button mat-raised-button class="col-6 col-sm-2 change-btn" (click)="changeDateFormatBtn()" matTooltip="For from and to date condition">Change Format</button>
+                        <div class="Particular-date-container row row-wrap overlow-auto gap-3 justify-content-center" *ngIf="!changeDatefield">
+                            <div class="date-container col-2 d-flex justify-content-between align-items-center" *ngFor="let date of selectedDates; index as i">
+                                <div>{{ date | date : 'dd-MM-yyyy' }}</div>
+                                <div><mat-icon (click)="removeParticularDate(i)">close</mat-icon></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6 col-sm-3 d-flex align-items-center justify-content-between"> Plant <mat-icon>label</mat-icon></div>
+                        <mat-form-field class="col-6 col-sm-3" appearance="outline">
+                            <mat-label>Plant</mat-label>
+                            <input matInput type="text" formControlName="Plant">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6 col-sm-3 d-flex align-items-center justify-content-between"> Created By <mat-icon>label</mat-icon></div>
+                        <mat-form-field class="col-6 col-sm-3" appearance="outline">
+                            <mat-label>User Id</mat-label>
+                            <input matInput type="text" formControlName="UserId">
+                        </mat-form-field>
+                    </div>
+
+                    <div>
+                        <div><b>Status</b></div>
+                        <mat-radio-group formControlName="Status">
+                            <mat-radio-button value="All">All</mat-radio-button>
+                            <mat-radio-button value="Completed">Completed</mat-radio-button>
+                            <mat-radio-button value="Pending">Pending</mat-radio-button>
+                            <mat-radio-button value="Rejected">Rejected</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+
+
+                    <div class="row justify-content-between">
+                        <div class="col-12 col-sm-6">
+                            <div><b>Material Indicator</b></div>
+                            <mat-radio-group formControlName="Indicator">
+                                <mat-radio-button value="BO">Both</mat-radio-button>
+                                <mat-radio-button value="WM">With Material</mat-radio-button>
+                                <mat-radio-button value="WO">Without Material</mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+                        <!-- </div> -->
+
+                        <div class="col-12 col-sm-6 d-flex gap-3 justify-content-end">
+                            <button mat-raised-button class="back-btn" [routerLink]="['/pages/warrantypages/dashboard']" routerLinkActive="router-link-active" ><mat-icon>keyboard_backspace</mat-icon>Back</button>
+                            <button mat-raised-button class="clear-btn" (click)="clear()"><mat-icon>clear</mat-icon>Clear</button>
+                            <button mat-raised-button class="execute-btn" (click)="execute()"><mat-icon>save</mat-icon>Execute</button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </form>
+
+        </mat-card>
+    </div>
+    
+    <div class="table-container">
+        <div class="scrollable-container">
+            <table *ngIf="showTable" [dataSource]="dataSource" mat-table class="mt-2">
+
+                <ng-container *ngFor="let col of tableColumns" [matColumnDef]="col">
+                    <mat-header-cell *matHeaderCellDef class="sticky-header"> {{ col | titlecase }} </mat-header-cell>
+                    <mat-cell *matCellDef="let element; index as i" [ngStyle]="{
+                        'font-weight': (col === 'Status' || col === 'TrackingNo') ? 'bold' : '',
+                        'font-size': col === 'TrackingNo' ? '16px' : '',
+                        'cursor': col === 'TrackingNo' ? 'pointer' : 'default',
+                        'color': (hoveredColumn === col && hoveredRow === i && col === 'TrackingNo') ? 'orange' : col === 'Status' ? (element.Status === 'Completed' ? 'green' : element.Status === 'Pending' ? 'blue' : 'red') : '',
+                    }" (click)="onColumnClick(col, element)"
+                    (mouseenter)="setHoveredColumnAndRow(col, i)"
+                    (mouseleave)="clearHoveredColumnAndRow()"> {{element[col]}} </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="tableColumns; sticky : true"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: tableColumns;"></mat-row>
+
+            </table>
+        </div>
+    </div>
+
+</div>
