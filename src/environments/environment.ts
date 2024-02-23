@@ -10,4 +10,5 @@
 
 export const environment = {
   production: false,
+  baseAddress : "https://localhost:7138/api/",
 };

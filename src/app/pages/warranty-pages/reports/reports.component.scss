@@ -1,0 +1,92 @@
+.report-container
+{
+    .mat-mdc-form-field-subscript-wrapper, 
+    .mat-mdc-form-field-bottom-align::before {
+        line-height: 0; /* Adjust the line height as needed */
+    }
+    
+}
+
+
+.change-btn
+{
+    background-color: rgb(255, 194, 81) !important;
+    color: white !important;
+}
+
+
+.table-container
+{
+    // overflow: auto;
+    max-height: 300px;
+
+
+
+    mat-header-cell.mat-mdc-header-cell, mat-cell.mat-mdc-cell, mat-footer-cell.mat-mdc-footer-cell
+    {
+        width: 150px;
+    }
+
+    .scrollable-container {
+        max-height: 300px; /* Adjust this based on your needs */
+        // overflow-y: auto;
+      }
+      
+      table
+      {
+        overflow: auto;
+
+        thead {
+            position: sticky;
+            top: 0;
+            background-color: orange;
+            font-weight: bold; /* Set your desired background color */
+            z-index: 1;
+          }
+
+      }
+}
+
+
+.mat-header-row {
+    position: sticky;
+    top: 0;
+    background-color: white; /* Set your desired background color */
+    z-index: 1;
+  }
+
+
+.execute-btn
+{
+    background-color: rgb(48, 218, 48) !important;
+    color: white !important;
+}
+
+.clear-btn
+{
+    background-color: rgb(235, 56, 56) !important;
+    color: white !important;
+}
+
+.back-btn
+{
+    background-color: blue !important;
+    color: white !important;
+}
+
+
+.Particular-date-container
+{
+    max-height: 50px;
+    overflow: auto;
+
+
+    .date-container
+    {
+        background-color: rgb(255, 211, 130);
+        color: black;
+        border-radius: 10px;
+    }
+
+
+}

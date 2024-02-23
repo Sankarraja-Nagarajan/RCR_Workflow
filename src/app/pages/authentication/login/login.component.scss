@@ -1,0 +1,103 @@
+.login{
+    
+    overflow: hidden;
+    background-color: white;
+
+    .loginBg
+    {
+        height: 100vh;
+        background: url("/assets/images/Bg_image.jpg");
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+    }
+
+    .rcr-title
+    {
+        font-weight: bold;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        color: gray;
+        font-size: 18px;
+    }
+
+    .title
+    {
+        font-size: 25px;
+        line-height: 1.57;
+        letter-spacing: 2.28px;
+        text-align: left;
+        color: #f3a046 !important;
+        font-weight: 900;
+    }
+
+    .subTitle
+    {
+        opacity: 0.8;
+        font-size: 14px;
+        font-weight: 800;
+        line-height: 1.33;
+        letter-spacing: 0.72px;
+        text-align: left;
+        color: #454545;
+    }
+  
+    ::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled) 
+    {
+        background-color: white;
+    }
+
+    .loginForm
+    {
+
+        background-color: white;
+        height: 100vh;
+
+        .logo
+        {
+            height: 156px;
+        }
+
+        .formField
+        {
+            width: 70%;
+        }
+
+        .forgotPassword
+        {
+            font-size: 12x;
+            font-weight: 700;
+            margin-bottom: 16px;
+            opacity: 0.8;
+            line-height: 1.33;
+            letter-spacing: 0.72px;
+            text-align: left;
+            color: rgb(107, 102, 94);
+        }
+
+        .loginButton 
+        {
+            font-weight: 500;
+            font-size: 17px;
+            color: #ffffff;
+        }
+
+        .submit-button 
+        {
+            width: 68%;
+            display: block;
+            background-color: #f3a046 !important;
+            color: white;
+        }
+    }
+
+    .forgotPassword
+    {
+        font-size: 12px !important;
+        cursor: pointer;
+    }
+    
+}
+
+.userActivationDialog
+{
+    background: rgba(128, 128, 128, 0.61)
+}

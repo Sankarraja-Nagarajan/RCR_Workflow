@@ -1,0 +1,183 @@
+<div class="container-fluid row gap-3">
+    
+    <div>
+        <mat-card class="dash-card row justify-content-center">
+            <div class="row p-3 gap-3">
+                <div class="d-flex col ClickedAllCard" [class.active]="activeCard == 1"  (click)="CardClicked(1)">
+                    <div id="All" class="row cards" (click)="selectStatus('All')">
+                        <div class="d-flex justify-content-start">
+                            <div class="AllDot mt-1"></div>
+                            <span class="ms-1">All</span>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            {{dashboardTable.allWarranty.length}}
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex col ClickedPendingCard" [class.active]="activeCard == 2" (click)="CardClicked(2)">
+                    <div id="Pending" class="row cards" (click)="selectStatus('Pending')">
+                        <div class="d-flex justify-content-start">
+                            <div class="PendingDot mt-1"></div>
+                            <span class="ms-1">Pending</span>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            {{dashboardTable.pendingWarranty.length}}
+                        </div>
+                    </div>  
+                </div>
+                <div class="d-flex col ClickedApproveCard" [class.active]="activeCard == 3" (click)="CardClicked(3)" *ngIf="userDetails.Role == 'A'">
+                    <div id="Approve" class="row cards" (click)="selectStatus('Approve')">
+                        <div class="d-flex justify-content-start">
+                            <div class="ApproveDot mt-1"></div>
+                            <span class="ms-1">Approved</span>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            {{dashboardTable.approvedWarranty.length}}
+                        </div>
+                    </div>  
+                </div>
+                <div class="d-flex col ClickedApproveCard" [class.active]="activeCard == 5" (click)="CardClicked(5)" *ngIf="userDetails.Role != 'A'">
+                    <div id="Approve" class="row cards" (click)="selectStatus('Completed')">
+                        <div class="d-flex justify-content-start">
+                            <div class="ApproveDot mt-1"></div>
+                            <span class="ms-1">Completed</span>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            {{dashboardTable.completedWarranty.length}}
+                        </div>
+                    </div>  
+                </div>
+                <div class="d-flex col ClickedRejectCard" [class.active]="activeCard == 4" (click)="CardClicked(4)">
+                    <div id="Reject" class="row cards" (click)="selectStatus('Reject')">
+                        <div class="d-flex justify-content-start">
+                            <div class="RejectDot mt-1"></div>
+                            <span class="ms-1">Rejected</span>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            {{dashboardTable.rejectedWarranty.length}}
+                        </div>
+                    </div>  
+                </div>
+            </div>
+        </mat-card>
+    </div>
+   
+    <div class="row">
+        <div class="borders"></div>
+        <div class="borderstraight"></div>
+        <mat-card>
+            <mat-card-content>
+                
+                 <div class="row justify-content-between" *ngIf="userDetails.Role != 'A'">
+                    <div class="col-4 row mb-3">
+                        <div class="col" *ngIf="!showDownload">
+                            <button class="export-excel" mat-raised-button (click)="selectTrackingNo()"><mat-icon>download</mat-icon>Export Excel</button>
+                        </div>
+                        <div class="col d-flex gap-3" *ngIf="showDownload">
+                            <button mat-raised-button class="export-btn" (click)="download()"> <mat-icon>download</mat-icon> Download </button>
+                            <button mat-raised-button class="export-cancel-btn" (click)="cancelDownload()"> <mat-icon>cancel_presentation</mat-icon> Cancel </button>
+                        </div>
+                     </div>
+                     <div class="col-3" *ngIf="pendingBtn">
+                        <button class="pending-btn" mat-raised-button (click)="pendingDownload()"><mat-icon>download</mat-icon>Pending Excel Download</button>
+                     </div>
+                 </div>
+                 
+                 <div class="row overflow-auto">
+                     <table class="table" mat-table [dataSource]="dataSource" matSort>
+
+                        <ng-container matColumnDef="SELECET">
+                            <th mat-header-cell *matHeaderCellDef>
+                                <mat-checkbox (change)="$event ? masterToggle() : null"
+                                    [checked]="selection.hasValue() && isAllSelected()"
+                                    [indeterminate]="selection.hasValue() && !isAllSelected()">
+                                  
+                                </mat-checkbox>
+                            </th>
+                            <td mat-cell *matCellDef="let row">
+                                <mat-checkbox (click)="$event.stopPropagation()"
+                                    (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)"
+                                    >
+                                </mat-checkbox>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="TRACKING_NO">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Tracking No </th>
+                            <td mat-cell *matCellDef="let element"> {{element.TrackingNo}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="INITIATED_DATE">
+                            <th mat-header-cell *matHeaderCellDef> Initiated Date </th>
+                            <td mat-cell *matCellDef="let element"> {{element.InitiatedDate | date : 'dd/MM/yyyy'}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="ITEM">
+                            <th mat-header-cell *matHeaderCellDef> Line Item </th>
+                            <td mat-cell *matCellDef="let element"> {{element.Item}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="CUSTOMER_CODE">
+                            <th mat-header-cell *matHeaderCellDef> Customer Code </th>
+                            <td mat-cell *matCellDef="let element"> {{element.CustomerCode}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="CUSTOMER_NAME">
+                            <th mat-header-cell *matHeaderCellDef> Customer Name </th>
+                            <td mat-cell *matCellDef="let element"> {{element.CustomerName}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="CONTI_PART_NUMBER">
+                             <th mat-header-cell *matHeaderCellDef> Conti Part Number </th>
+                             <td mat-cell *matCellDef="let element"> {{element.ContiPartNo}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="CUSTOMER_PART_NUMBER">
+                             <th mat-header-cell *matHeaderCellDef> Customer Part Number </th>
+                             <td mat-cell *matCellDef="let element"> {{element.CustomerPartNo}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="DESCRIPTION">
+                             <th mat-header-cell *matHeaderCellDef> Description </th>
+                             <td mat-cell *matCellDef="let element"> {{element.MaterialDescription}} </td>
+                        </ng-container>
+
+                       <ng-container matColumnDef="STATUS">
+                            <th mat-header-cell *matHeaderCellDef> Status </th>
+                            <td mat-cell *matCellDef="let element">
+                                <button class="active-btn" *ngIf="element.Status == 'Active'" mat-raised-button (click)="approve(element.TrackingNo)">Review</button>
+                                <span class="approved" *ngIf="element.Status == 'Approved'" (click)="showStatus(element)">{{element.Status}}</span>
+                                <span class="rejected" *ngIf="element.Status == 'Rejected'" (click)="showStatus(element)">{{element.Status}}</span>
+                                <span class="pending" *ngIf="element.Status == 'Pending'">{{element.Status}}</span>
+                                <span class="completed" *ngIf="element.Status == 'Completed'">{{element.Status}}</span>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="USER">
+                            <th mat-header-cell *matHeaderCellDef> User </th>
+                            <td mat-cell *matCellDef="let element"> {{element.CurrentUser}} </td>
+                       </ng-container>
+
+                        <ng-container matColumnDef="REVIEW">
+                            <th mat-header-cell *matHeaderCellDef> Review </th>
+                            <td mat-cell *matCellDef="let element"> <mat-icon class="eye" (click)="review(element)">remove_red_eye</mat-icon> </td>
+                        </ng-container>
+
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                     </table>
+                     <div *ngIf="!tableData?.length" class="d-flex align-items-center gap-3" style="background-color: white;">
+                         <mat-icon class="icon justify-content-start">info</mat-icon>
+                         <span>No Records Found...!</span>
+                     </div>
+                     <mat-paginator class="justify-content-end p-0" [style.display]="tableData?.length?'inherit':'none'"
+                         [length]="tableData?.length" [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]"
+                         aria-label="Select page">
+                     </mat-paginator>
+                 </div>
+            </mat-card-content>
+         </mat-card>
+    </div>
+    
+</div>

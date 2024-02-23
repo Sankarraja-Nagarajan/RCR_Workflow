@@ -1,0 +1,359 @@
+.row
+{
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+}
+.dash-card 
+{
+
+    border-radius: 10px;
+
+    .cards
+    {
+        cursor: pointer;
+    }
+
+
+    #All 
+    {
+        background-image:
+            linear-gradient(to bottom, rgba(242, 181, 69, 0.186), rgba(248, 182, 69, 0.178)),
+            url("/assets/images/Chartimages.jpg");
+        width: 100%;
+        height: 130px;
+        background-size: cover;
+        padding: 20px;
+        border-radius: 10px;
+        border-bottom: 5px solid orange;
+        font-size: 17px;
+        font-weight: bold;
+    }
+
+    .ClickedAllCard
+    {
+        padding: 10px;
+        transition: border-bottom 0.3s;
+        cursor: pointer;
+    }
+
+    .ClickedAllCard.active
+    {
+        border-radius: 5px;
+        border-bottom: 3px solid orange;
+
+    }
+
+    #All:hover
+    {
+        background-image:
+            linear-gradient(to bottom, rgba(247, 180, 65, 0.452), rgba(247, 180, 65, 0.452)),
+            url("/assets/images/Chartimages.jpg");
+    }
+
+    .AllDot 
+    {
+        background-color: orange;
+        width: 13px;
+        height: 13px;
+        border-radius: 7px;
+    }
+
+    #Active 
+    {
+        background-image:
+            linear-gradient(to bottom, rgba(233, 120, 205, 0.13), rgba(233, 120, 205, 0.13)),
+            url("/assets/images/Activeimages.jpg");
+        width: 100%;
+        height: 130px;
+        background-size: cover;
+        padding: 20px;
+        border-radius: 10px;
+        border-bottom: 5px solid purple;
+        font-size: 17px;
+        font-weight: bold;
+    }
+
+    #Active:hover
+    {
+        background-image:
+            linear-gradient(to bottom, rgba(255, 137, 225, 0.493), rgba(255, 137, 225, 0.493)),
+            url("/assets/images/Activeimages.jpg");
+    }
+
+    .ActiveDot 
+    {
+        background-color: purple;
+        width: 13px;
+        height: 13px;
+        border-radius: 7px;
+    }
+
+    #Pending 
+    {
+        background-image:
+            linear-gradient(to bottom, rgba(129, 129, 238, 0.183), rgba(129, 129, 238, 0.183)),
+            url("/assets/images/Pendingimages.jpg");
+        width: 100%;
+        height: 130px;
+        background-size:  cover;
+        padding: 20px;
+        border-radius: 10px;
+        border-bottom: 5px solid blue;
+        font-size: 17px;
+        font-weight: bold;
+    }
+
+    #Pending:hover
+    {
+        background-image:
+            linear-gradient(to bottom, rgba(158, 158, 255, 0.5), rgba(158, 158, 255, 0.5)),
+            url("/assets/images/Pendingimages.jpg");
+    }
+
+
+    .ClickedPendingCard
+    {
+        padding: 10px;    
+        transition: border-bottom 0.3s;
+        cursor: pointer;
+    }
+
+    .ClickedPendingCard.active
+    {
+        border-radius: 5px;
+        border-bottom: 3px solid blue;
+    }
+
+
+    .PendingDot 
+    {
+        background-color: blue;
+        width: 13px;
+        height: 13px;
+        border-radius: 7px;
+    }
+
+    #Approve 
+    {
+        background-image:
+            linear-gradient(to bottom, rgba(133, 241, 133, 0.187), rgba(133, 241, 133, 0.187)),
+            url("/assets/images/Approveimages.jpg");
+        width: 100%;
+        height: 130px;
+        background-size:  cover;
+        padding: 20px;
+        border-radius: 10px;
+        border-bottom: 5px solid green;
+        font-size: 17px;
+        font-weight: bold;
+    }
+
+    #Approve:hover
+    {
+        background-image:
+            linear-gradient(to bottom, rgba(105, 204, 105, 0.479), rgba(105, 204, 105, 0.479)),
+            url("/assets/images/Approveimages.jpg");
+    }
+
+    .ClickedApproveCard
+    {
+        padding: 10px;    
+        transition: border-bottom 0.3s;
+        cursor: pointer;
+    }
+
+    .ClickedApproveCard.active
+    {
+        border-radius: 5px;
+        border-bottom: 3px solid green;
+    }
+
+    .ApproveDot 
+    {
+        background-color: green;
+        width: 13px;
+        height: 13px;
+        border-radius: 7px;
+    }
+
+    #Reject 
+    {
+        background-image:
+            linear-gradient(to bottom, rgba(239, 120, 120, 0.193), rgba(239, 120, 120, 0.193)),
+            url("/assets/images/RejectImages.jpg");
+        width: 100%;
+        height: 130px;
+        background-size:  cover;
+        padding: 20px;
+        border-radius: 10px;
+        border-bottom: 5px solid red;
+        font-size: 17px;
+        font-weight: bold;
+    }
+
+    .ClickedRejectCard
+    {
+        padding: 10px;    
+        transition: border-bottom 0.3s;
+        cursor: pointer;
+    }
+
+    .ClickedRejectCard.active
+    {
+        border-radius: 5px;
+        border-bottom: 3px solid red;
+    }
+
+    #Reject:hover
+    {
+        background-image:
+            linear-gradient(to bottom, rgba(239, 120, 120, 0.548), rgba(239, 120, 120, 0.548)),
+            url("/assets/images/RejectImages.jpg");
+    }
+
+    .RejectDot 
+    {
+        background-color: red;
+        width: 13px;
+        height: 13px;
+        border-radius: 7px;
+    }
+}
+
+    .borders 
+    {
+        border-top-left-radius: 15px;
+        background:rgb(251, 138, 8);
+        width: 400px;
+        position: relative;
+        height: 30px;
+        line-height: 100px;
+        text-align: center;
+        color: white;
+        font-size: 21px;
+        font-family: arial, sans-serif;
+    }
+
+    .borders:after 
+    {
+        position: absolute;
+        right: -50px;
+        content: '';
+        width: 0;
+        height: 0;
+        border-left: 50px solid transparent;
+        border-right: 50px solid transparent;
+        border-bottom: 50px solid rgb(251, 138, 8);
+    }
+
+    .borderstraight
+    {
+        border-bottom: 4px solid rgb(251, 138, 8);
+    }
+
+    .icon
+    {
+        color :orange;
+    }
+
+    mat-card
+    {
+        ::ng-deep .mat-mdc-text-field-wrapper 
+        {
+            height: 40px !important;
+        }
+    }
+
+table
+{
+    width: 100%;
+    overflow: auto !important;
+
+    th
+    {
+        color :white;
+        background-color: rgb(253, 179, 43);
+    }
+
+    td
+    {
+        font-size: 12px;
+        min-width: max-content !important;
+        background-color: white;
+    }
+
+    tr
+    {
+        height: 50px;
+    }
+
+    .eye
+    {
+        color: grey;
+        cursor: pointer;
+    }
+}
+
+.active-btn
+{
+    background-color: orange !important;
+    color: white !important;
+}
+.approved
+{
+    cursor: pointer;
+    color: green;
+    font-weight: bold;
+}
+.rejected
+{
+    cursor: pointer;
+    color: red;
+    font-weight: bold;
+}
+.pending
+{
+    color: rgb(192, 192, 44);
+    font-weight: bold;
+}
+
+.completed
+{
+    color: green;
+    font-weight: bold;
+}
+
+.export-btn
+{
+    background-color: rgb(122, 219, 122) !important;
+    color: white !important;
+}
+
+.export-cancel-btn
+{
+    background-color: rgb(226, 111, 111) !important;
+    color: white !important;
+}
+
+@media (max-width: 550px)
+{
+    .borders{
+        border-top-right-radius: 15px;
+    }
+    .borders:after{
+        border-bottom: 0px solid rgb(251, 138, 8);
+    }
+}
+
+
+.pending-btn
+{
+background-color: rgb(103, 103, 206) !important;
+color: white !important;
+}
+
+.export-excel
+{
+    background-color: rgb(122, 219, 122) !important;
+    color: white !important;
+}
