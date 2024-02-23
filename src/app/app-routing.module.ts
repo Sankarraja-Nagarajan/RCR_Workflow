@@ -16,6 +16,11 @@ export const routes: Routes = [
       .then(m => m.PagesModule),
   },
   {
+    path: 'theme',
+    loadChildren: () => import('./@theme/theme.module')
+      .then(m => m.ThemeModule),
+  },
+  {
     path: 'auth',
     component: NbAuthComponent,
     children: [

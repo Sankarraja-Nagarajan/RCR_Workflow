@@ -1,29 +1,114 @@
-<div class="header-container">
+<!-- <div class="header-container">
   <div class="logo-container">
+
     <a (click)="toggleSidebar()" href="#" class="sidebar-toggle">
       <nb-icon icon="menu-2-outline"></nb-icon>
     </a>
-    <a class="logo" href="#" (click)="navigateHome()">ngx-<span>admin</span></a>
+
+    <img src="/assets/images/contiLogoVector.png" style="width: 170px;height: 75px;">
+
+    <div class="heading d-flex">
+      <span>| </span>
+    <span class="ms-1">RCR</span>
+    </div>
+
+    <div class="d-flex gap-5 ms-5 menu-items">
+      <Span class="menu-list" routerLink="/pages/warrantypages/dashboard" routerLinkActive="active">Dashboard</Span>
+      <Span class="menu-list" routerLink="/pages/warrantypages/warranty" routerLinkActive="active" *ngIf="role != 'A'">Warranty</Span>
+    </div>
+
   </div>
-  <nb-select [selected]="currentTheme" (selectedChange)="changeTheme($event)" status="primary">
-    <nb-option *ngFor="let theme of themes" [value]="theme.value"> {{ theme.name }}</nb-option>
-  </nb-select>
 </div>
 
-<div class="header-container">
-  <nb-actions size="small">
+<div class="col-2 d-flex justify-content-end header-container">
 
-    <nb-action class="control-item">
-      <nb-search type="rotate-layout"></nb-search>
-    </nb-action>
-    <nb-action class="control-item" icon="email-outline"></nb-action>
-    <nb-action class="control-item" icon="bell-outline"></nb-action>
-    <nb-action class="user-action" *nbIsGranted="['view', 'user']" >
-      <nb-user [nbContextMenu]="userMenu"
-               [onlyPicture]="userPictureOnly"
-               [name]="user?.name"
-               [picture]="user?.picture">
-      </nb-user>
-    </nb-action>
-  </nb-actions>
-</div>
+  <div [matMenuTriggerFor]="menu" class="menu-item d-flex align-items-center gap-2">
+    <div class="user-logo d-flex justify-content-center align-items-center"> {{userFirstLetter}} </div>
+    <div class="user-title d-flex align-items-center">{{user}}</div>
+    <mat-menu #menu="matMenu" class="d-flex justify-content-center">
+      <button mat-menu-item (click)="changePassword()">
+        <mat-icon> vpn_key</mat-icon>
+        Change Password
+      </button>
+      <button mat-menu-item (click)="logout()">
+        <mat-icon>power_settings_new</mat-icon>
+        Log Out
+      </button>
+  </mat-menu>
+  </div>
+
+</div> -->
+
+
+
+
+<nav id="mainNavbar" class="navbar navbar-expand-lg-none fixed-top">
+
+  <div class="row ps-2 w-100">
+
+    <div class=" col-2  d-inherit d-md-none">
+      <div class="d-flex justify-content-center align-items-center">
+        <button class="navbar-toggler" type="button" data-toggle="collapse"
+        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+        aria-expanded="false" aria-label="Toggle navigation"
+        (click)="toggleCollapsed()">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+    </div>
+
+    <img src="/assets/images/contiLogoVector.png" style="width: 170px;height: 65px;">
+
+    <div class="col-1 heading d-flex align-items-center">
+      <span>| </span>
+      <span class="ms-1">RCR</span>
+    </div>
+
+    <div class="d-none d-md-block col-6 mt-3">
+      <div class="d-flex justify-content-center align-items-center d-flex gap-5 ms-5 menu-items">
+        <Span class="menu-list" routerLink="/pages/warrantypages/dashboard" routerLinkActive="active">Dashboard</Span>
+        <Span class="menu-list" routerLink="/pages/warrantypages/warranty" routerLinkActive="active" *ngIf="role != 'A'">Warranty</Span>
+      </div>
+    </div>
+
+
+    <div class="d-none d-md-block col">
+      <div class="d-flex justify-content-end mt-2 header-container">
+
+        <div [matMenuTriggerFor]="menu" class="menu-item d-flex align-items-center gap-2">
+          <div class="user-logo d-flex justify-content-center align-items-center"> {{userFirstLetter}} </div>
+          <div class="d-none d-lg-block"><div class="user-title d-flex align-items-center">{{user}}</div></div>
+          <mat-menu #menu="matMenu" class="d-flex justify-content-center">
+            <button mat-menu-item routerLink="/pages/warrantypages/reports">
+              <mat-icon> style </mat-icon>
+              RCR Reports
+            </button>
+            <button mat-menu-item (click)="changePassword()">
+              <mat-icon> vpn_key</mat-icon>
+              Change Password
+            </button>
+            <button mat-menu-item (click)="logout()">
+              <mat-icon>power_settings_new</mat-icon>
+              Log Out
+            </button>
+        </mat-menu>
+        </div>
+      
+      </div>
+    </div>
+
+
+  </div>
+
+    <div id="navbarSupportedContent"  [ngClass]="{'collapse': collapsed, 'navbar-collapse': true}">
+        <mat-card class="mat-card-content">
+          <div class="row d-inherit d-md-none nav-content justify-content-center gap-4 p-3">
+            <div class="menu-list d-flex justify-content-center" routerLink="/pages/warrantypages/dashboard" routerLinkActive="active">Dashboard</div>
+            <div class="menu-list d-flex justify-content-center" routerLink="/pages/warrantypages/warranty" routerLinkActive="active" *ngIf="role != 'A'">Warranty</div>
+            <div class="menu-list d-flex justify-content-center" (click)="changePassword()">Change Password</div>
+            <div class="menu-list d-flex justify-content-center" (click)="logout()">Log Out</div>
+          </div>
+        </mat-card>
+    </div>
+
+</nav>

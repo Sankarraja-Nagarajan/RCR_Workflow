@@ -1,0 +1,280 @@
+.container-fluid
+{
+
+
+    .radio-container
+    {
+        padding: 0px !important;
+
+        .row
+        {
+            padding-left: 0px !important;
+            padding-right: 0px !important;
+        }
+
+        .radio-title
+        {
+            background-color: orange;
+            color: white;
+            border-radius: 10px;
+        }
+    }
+
+    .card1-container
+    {
+        .title
+        {
+            background-color: orange;
+            color: white;
+            border-radius: 10px;
+        }
+
+        .mat-mdc-form-field-icon-prefix>.mat-icon, .mat-mdc-form-field-icon-suffix>.mat-icon
+        {
+            padding:  0px !important;
+            padding-bottom: 22px !important;
+            padding-right: 6px !important;
+        }
+    }
+
+    .cardUser-container
+    {
+        .title
+        {
+            background-color: orange;
+            color: white;
+            border-radius: 10px;
+        }
+
+        .mat-icon
+        {
+            color: rgb(92, 90, 90);
+            cursor: pointer;
+        }
+
+        .mat-mdc-form-field-icon-prefix>.mat-icon, .mat-mdc-form-field-icon-suffix>.mat-icon
+        {
+            padding:  0px !important;
+            padding-bottom: 22px !important;
+            padding-right: 6px !important;
+        }
+    }
+
+    .card2-container
+    {
+
+        .title
+        {
+            background-color: orange;
+            color: white;
+            border-radius: 10px;
+        }
+    }
+
+    .card3-container
+    {
+
+        .title
+        {
+            background-color: orange;
+            color: white;
+            border-radius: 10px;
+        }
+    }
+
+    .card4-container
+    {
+
+        .title
+        {
+            background-color: orange;
+            color: white;
+            border-radius: 10px;
+        }
+
+        .mat-icon
+        {
+            color: rgb(92, 90, 90);
+            cursor: pointer;
+        }
+
+        .mat-mdc-form-field-icon-prefix>.mat-icon, .mat-mdc-form-field-icon-suffix>.mat-icon
+        {
+            padding:  0px !important;
+            padding-bottom: 22px !important;
+            padding-right: 6px !important;
+        }
+    }
+
+    .card5-container
+    {
+
+        .title
+        {
+            background-color: orange;
+            color: white;
+            border-radius: 10px;
+        }
+    }
+
+    .card6-container
+    {
+
+        .title
+        {
+            background-color: orange;
+            color: white;
+            border-radius: 10px;
+        }
+    }
+
+    .mat-mdc-text-field-wrapper {
+        height: 35px !important;
+    }
+    .mat-mdc-text-field-wrapper.mdc-text-field--outlined .mat-mdc-form-field-infix
+    {
+        padding-top: 5px !important;
+    }
+
+    mat-card
+    {
+        border-radius: 10px;
+    }
+
+    .btn
+    {
+        background-color: rgba(230, 168, 54, 0.945) !important;
+        color: white !important;
+        font-weight: bold;
+    }
+  
+    .example-container
+    {
+
+        max-height: 300px !important;
+        overflow: auto;
+        padding-right: 0px !important;
+        padding-left: 0px !important;
+
+        th{
+            background-color: orange;
+            color: white;
+        }
+
+
+        table
+        {
+
+            .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__leading,
+            .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__notch,
+            .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__trailing{
+                border-color : white !important;
+            }
+
+            .mdc-text-field--outlined:not(.mdc-text-field--disabled):not(.mdc-text-field--focused):hover .mdc-notched-outline .mdc-notched-outline__leading,
+            .mdc-text-field--outlined:not(.mdc-text-field--disabled):not(.mdc-text-field--focused):hover .mdc-notched-outline .mdc-notched-outline__notch,
+            .mdc-text-field--outlined:not(.mdc-text-field--disabled):not(.mdc-text-field--focused):hover .mdc-notched-outline .mdc-notched-outline__trailing{
+                border-color : black !important;
+            }
+
+            th
+            {
+                min-width: 200px;
+            }
+
+            .edit, .delete
+            {
+                cursor: pointer;
+            }
+
+            .edit
+            {
+                color: blue;
+            }
+
+            .delete
+            {
+                color: red;
+            }
+
+            th.mat-column-Remove, td.mat-column-Remove 
+            {
+                min-width: 10px;
+            }
+
+        }
+
+    }
+
+
+    label
+    {
+        font-weight: bold;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+    
+}
+
+.search
+{
+
+    .mat-mdc-form-field-icon-prefix>.mat-icon, .mat-mdc-form-field-icon-suffix>.mat-icon
+    {
+        padding:  0px !important;
+        padding-bottom: 22px !important;
+        padding-right: 6px !important;
+    }
+}
+
+.search-icon
+{
+    color: rgb(92, 90, 90);
+    cursor: pointer;
+}
+
+.total
+{
+    font-weight: bold;
+}
+
+.add-btn
+{
+    background-color: rgb(127, 77, 163) !important;
+    color: white !important;
+}
+
+.upload-btn
+{
+    background-color: skyblue !important;
+    color: white !important;
+}
+
+.cancel-btn
+{
+    background-color: rgb(201, 67, 67) !important;
+    color: white !important;
+}
+
+.execute-btn
+{
+    background-color: rgb(72, 196, 72) !important;
+    color: white !important;
+}
+
+.UploadBtn
+{
+    background-color: darkgray !important;
+    color: white !important;
+}
+
+
+.claim-container
+{
+    .row
+    {
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+        margin-left: 0px !important;
+        margin-right: 0px !important;
+    }
+}

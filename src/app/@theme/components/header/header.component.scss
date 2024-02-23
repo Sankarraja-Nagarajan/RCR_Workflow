@@ -12,6 +12,27 @@
     align-items: center;
     width: calc(#{nb-theme(sidebar-width)} - #{nb-theme(header-padding)});
   }
+  
+  nb-icon{
+    color:white;
+  }
+
+  .heading{
+    font-size: 20px;
+    font-weight: bold;
+    color:white;
+  }
+
+  ::ng-deep nb-user.shape-round .user-picture {
+    color: white;
+  }
+
+  ::ng-deep nb-user.size-medium .user-name {
+    color:white !important;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+  }
 
   nb-action {
     height: auto;
@@ -21,6 +42,7 @@
 
   nb-user {
     cursor: pointer;
+    color: white;
   }
 
   ::ng-deep nb-search button {
@@ -67,4 +89,71 @@
       display: none;
     }
   }
+}
+
+
+ .menu-items :hover
+
+{
+
+  color: black;
+
+  border-radius : 10px;
+
+  cursor: pointer;
+
+}
+
+.mat-card-content
+{
+  background-color: orange !important;
+}
+
+.menu-list
+{
+  cursor: pointer;
+  font-weight: bold;
+
+  font-size: 18px;
+
+  font-family: Arial, Helvetica, sans-serif;
+
+  color: white;
+
+}
+.active
+{
+  color: black;
+} 
+
+.menu-item
+{
+  cursor: pointer;
+
+  
+
+}
+
+.user-logo
+{
+  border-radius: 50%;
+  border: 1px solid black;
+  font-weight: bold;
+  width: 40px;
+  height:40px;
+}
+
+.user-title
+{
+  font-weight: bold;
+}
+
+::ng-deep .mat-mdc-menu-content
+{
+  width: 250px !important;
+}
+
+::ng-deep .userActivationDialog
+{
+    background: rgba(128, 128, 128, 0.61) !important;
 }
